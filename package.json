@@ -1,0 +1,20 @@
+{
+  "name": "functional-linq",
+  "version": "1.0.0",
+  "description": "This is an implementation of csharps LINQ using Typescript and the functional programming paradigm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc -w",
+    "execute": "node build/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Functional-programming"
+  },
+  "author": "Steven K",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^2.9.1"
+  }
+}
