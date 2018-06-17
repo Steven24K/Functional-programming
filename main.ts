@@ -7,6 +7,8 @@ import { pairListtoString, reverse, stringify, concat, fold, mapFold, filterFold
 import { allNumber, allNumberRev, allEvenRange, allNumberRange, allNumberRangeRev, drawLine, drawSymbols, toBinary, toBase } from "./src/utils/functional";
 import { merge, mergeSort } from "./src/utils/algorithms";
 import { node, empty } from "./src/datastructures/list";
+import { Tree, EmptyTree } from "./src/datastructures/binarytree";
+import { createTree, treeToString, mapTree } from "./src/utils/tree-methods";
 
 console.log("______UNIT#1______")
 
@@ -90,9 +92,16 @@ console.log(drawSymbols("_")(20))
 
 console.log("______UNIT#5______")
 
-console.log("Exercise 1: ")
-console.log("Exercise 2: ")
-console.log("Exercise 3: ")
-console.log("Exercise 4: ")
-console.log("Exercise 5: ")
+                      let tree1 = Tree(5, 
+              Tree(3, 
+    EmptyTree(), EmptyTree()),       Tree(8, 
+                                EmptyTree(), EmptyTree()))
+
+let tree2 = createTree(0)(10)(EmptyTree())
+
+
+console.log("Exercise 1: " + tree1.tryFind(3))
+console.log("Exercise 2: " + treeToString(tree2.insert(55)))
+console.log("Exercise 3: " + treeToString(tree2))
+console.log("Exercise 4: " + treeToString(mapTree((x: number) => x*5)(tree2)))
 console.log(drawSymbols("_")(20))
