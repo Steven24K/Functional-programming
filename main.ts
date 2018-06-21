@@ -1,7 +1,7 @@
-import { Add, Mul, Val, Sub, Var } from "./src/interpreter/expressions";
+import { Add, Mul, Val, Sub, Var, Txt, Div } from "./src/evaluator/expressions";
 import { fromArray, last, createList, fromString, index, palindrome, compress, caesarChypher, splitAt, creatRandomList, filter, map, apply, curry } from "./src/utils/support";
-import { Assignment, _eval, run } from "./src/interpreter/methods";
-import { Memory } from "./src/interpreter/memory";
+import { Assignment, evaluate, run, Print } from "./src/evaluator/methods";
+import { Memory } from "./src/evaluator/memory";
 import { Pair, pair } from "./src/datastructures/pair";
 import { pairListtoString, reverse, stringify, concat, fold, mapFold, filterFold, flatten, map2, fold2, zip, optionListtoString, map2Safe } from "./src/utils/fold";
 import { allNumber, allNumberRev, allEvenRange, allNumberRange, allNumberRangeRev, drawLine, drawSymbols, toBinary, toBase } from "./src/utils/functional";
@@ -49,20 +49,20 @@ console.log("Exercise 1: 1.) " + stringify(split1.first) + " 2.) " + stringify(s
 console.log("Exercise 2: " + stringify(merge(MyList1)(MyList2)))
 console.log("Exercise 3: " + stringify(mergeSort(MyList5)))
 
-let expr = Add(Mul(Val(3), Val(-2)), Sub(Var("x"), Val(4)))
+let stack: Memory = empty()
 
-let testProgram = fromArray(
+let program = fromArray(
     [
-        Assignment("x", Val(5)),
-        Assignment("y", Val(2)),
-        Assignment("x", Add(Var("x"), Var("y")))
+        /*((12+3)-5) * ((24/6)+7) = 110 */
+        Assignment("x", Mul(Sub(Add(Val(12))(Val(3)))(Val(5)))(Add(Div(Val(24))(Val(6)))(Val(7)))),
+        Assignment("msg", Txt("Hello World, in this tiny imparative programming language in Typescript!!!")),
+        Print(Add(Txt("((12+3)-5) * ((24/6)+7) = "))(Var("x"))),
+        Print(Var("msg")),
     ]
 )
 
-let emptyMem: Memory = fromArray<Pair<string, number>>([])
-
-console.log("Exercise 4 and 5: " + _eval(expr)(fromArray([ pair("x", 5)] )).toString())
-console.log("Exercise 6: " + pairListtoString(run(testProgram)(emptyMem)))
+console.log("Exercise 4, 5 and 6: ")
+run(program)(stack)
 
 console.log(drawSymbols("_")(20))
 

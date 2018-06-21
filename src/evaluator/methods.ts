@@ -1,9 +1,9 @@
 import { Expression } from "./expressions";
 import { Memory, lookup, setMemory } from "./memory";
-import { stmtToString, Statement } from "./statements";
+import { Statement } from "./statements";
 import { List } from "../datastructures/list";
 
-export let _eval = (expr: Expression) => (stack: Memory): number => {
+export let evaluate = (expr: Expression) => (stack: Memory): any => {
     if (expr.kind == "val") {
         return expr.value
     }
@@ -11,16 +11,19 @@ export let _eval = (expr: Expression) => (stack: Memory): number => {
         return lookup(expr.name)(stack)
     }
     else if (expr.kind == "add") {
-        return _eval(expr.left)(stack) + _eval(expr.right)(stack)
+        return evaluate(expr.left)(stack) + evaluate(expr.right)(stack)
     }
     else if (expr.kind == "sub"){
-        return _eval(expr.left)(stack) - _eval(expr.right)(stack)
+        return evaluate(expr.left)(stack) - evaluate(expr.right)(stack)
     }
     else if (expr.kind == "mul") {
-        return _eval(expr.left)(stack) * _eval(expr.right)(stack)
+        return evaluate(expr.left)(stack) * evaluate(expr.right)(stack)
     }
-    else {
-        return _eval(expr.left)(stack) / _eval(expr.right)(stack)
+    else if (expr.kind == "div"){
+        return evaluate(expr.left)(stack) / evaluate(expr.right)(stack)
+    }
+    else if (expr.kind == "text") {
+        return expr.message
     }
 }
 
@@ -30,27 +33,24 @@ export let Assignment = (id: string, expr: Expression): Statement => {
     return {
       kind: "assignment",
       var: id,
-      expr: expr,
-      toString: stmtToString
+      expr: expr
     }
   }
   
 export let Print = (expr: Expression): Statement => {
     return {
       kind: "print",
-      expr: expr,
-      toString: stmtToString
+      expr: expr
     }
   }
 
 
 let runStmt = (stmt: Statement) => (stack: Memory): Memory => {
-    let v = _eval(stmt.expr)(stack)
     if (stmt.kind == "assignment") {
-        return setMemory(stmt.var)(v)(stack)
+        return setMemory(stmt.var)(evaluate(stmt.expr)(stack))(stack)
     }
     else {
-        console.log(v)
+        console.log(evaluate(stmt.expr)(stack))
         return stack
     }
 }
