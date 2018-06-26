@@ -6,9 +6,10 @@ import { Pair, pair } from "./src/datastructures/pair";
 import { pairListtoString, reverse, stringify, concat, fold, mapFold, filterFold, flatten, map2, fold2, zip, optionListtoString, map2Safe } from "./src/utils/fold";
 import { allNumber, allNumberRev, allEvenRange, allNumberRange, allNumberRangeRev, drawLine, drawSymbols, toBinary, toBase } from "./src/utils/functional";
 import { merge, mergeSort } from "./src/utils/algorithms";
-import { node, empty } from "./src/datastructures/list";
-import { Tree, EmptyTree } from "./src/datastructures/binarytree";
+import { node, empty, ListTypeClass } from "./src/datastructures/list";
+import { Tree, EmptyTree, TreeTypeClass } from "./src/datastructures/binarytree";
 import { createTree, treeToString, mapTree } from "./src/utils/tree-methods";
+import { SomeOptional, printOption } from "./src/datastructures/option";
 
 console.log("______UNIT#1______")
 
@@ -99,9 +100,17 @@ console.log("______UNIT#5______")
 
 let tree2 = createTree(0)(10)(EmptyTree())
 
+let functorOption = SomeOptional<number, string>(4)
+let lTypeClass = ListTypeClass(creatRandomList(15))
+let treeTypeClass = TreeTypeClass(createTree(42)(69)(EmptyTree()))
 
 console.log("Exercise 1: " + tree1.tryFind(3))
 console.log("Exercise 2: " + treeToString(tree2.insert(55)))
 console.log("Exercise 3: " + treeToString(tree2))
 console.log("Exercise 4: " + treeToString(mapTree((x: number) => x*5)(tree2)))
+console.log("Exercise 5: " + printOption(functorOption.map((x) => String(x + 5))))
+console.log("Exercise 6: " + stringify(lTypeClass.map((x : number) => x + 5)))
+console.log("Exercise 7: " + treeToString(treeTypeClass.map((x: number) => x + 5)))
+
+
 console.log(drawSymbols("_")(20))

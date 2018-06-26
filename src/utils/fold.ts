@@ -1,6 +1,6 @@
 import {List, empty, node} from "../datastructures/list"
 import { Pair, pair } from "../datastructures/pair";
-import { apply, map } from "./support";
+import { map } from "./support";
 import { Option, None, Some } from "../datastructures/option";
 
 export let fold = <s, a>(f: (state: s) => (x: a) => s) => (accumulator: s) => (list: List<a>): s => {

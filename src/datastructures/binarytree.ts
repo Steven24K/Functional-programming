@@ -1,5 +1,6 @@
 import { Option } from "./option";
-import { tryFind, insert } from "../utils/tree-methods";
+import { tryFind, insert, mapTree } from "../utils/tree-methods";
+import { Functor } from "./functor";
 
 type BinaryTreeData<a> = {
     kind: "empty"
@@ -35,3 +36,18 @@ export let EmptyTree = <a>(): BinaryTree<a> => {
 export let Tree = <a>(x: a, left: BinaryTree<a>, right: BinaryTree<a>): BinaryTree<a> => {
     return BinaryTree({kind: "node", value: x, left: left, right: right})
 }
+
+let TreeFunctor = <a, b>(): Functor<BinaryTree<a>, BinaryTree<b>, a, b> => {
+    return {
+      map: function(this: BinaryTree<a>, f: (x: a) => b): BinaryTree<b> {
+        return mapTree(f)(this)
+      }
+    }
+  }
+  
+  export type TreeType<a, b> = BinaryTree<a> & Functor<BinaryTree<a>, BinaryTree<b>, a, b>
+  export let TreeTypeClass = <a, b>(t: BinaryTree<a>): TreeType<a, b> => {
+    return {...t,
+      map: TreeFunctor<a, b>().map
+    }
+  }
